@@ -1,91 +1,55 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+import PokemonCard from "@/components/PokemonCard/PokemonCard";
+import PokemonLoader from "@/components/PokemonCard/PokemonLoader";
+import { Inter } from "next/font/google";
+import { Suspense } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+// Revalidate every 24 hours
+export const revalidate = 86400;
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
+// Interface for a result from the /pokemon endpoint
+interface PokemonData {
+  name: string;
+  url: string;
+}
 
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+// Interface for the /pokemon endpoint response
+interface PokemonPageResponse {
+  count: number;
+  next: string;
+  results: PokemonData[];
+}
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+// Fetches a list of pokemon from the /pokemon endpoint
+// TODO: ADD PAGINATION
+const getPokemon = async () => {
+  const data = await fetch(
+    "https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0",
+    { next: { revalidate: revalidate } }
   )
+    .then((res: Response) => res.json())
+    .then((data: PokemonPageResponse) => data);
+  return data;
+};
+
+export default async function Home() {
+  const data = await getPokemon();
+
+  return (
+    <section className="body-font">
+      <div className="container mx-auto grid grid-cols-3 gap-2">
+        {data &&
+          data.results.map((pokemon) => (
+            <Suspense key={pokemon.name} fallback={<PokemonLoader />}>
+              <PokemonCard
+                key={pokemon.name}
+                name={pokemon.name}
+                url={pokemon.url}
+              />
+            </Suspense>
+          ))}
+      </div>
+    </section>
+  );
 }
