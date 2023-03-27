@@ -42,6 +42,7 @@ export default async function Home() {
         {data &&
           data.results.map((pokemon) => (
             <Suspense key={pokemon.name} fallback={<PokemonLoader />}>
+              {/* @ts-expect-error Server Component */}
               <PokemonCard
                 key={pokemon.name}
                 name={pokemon.name}
