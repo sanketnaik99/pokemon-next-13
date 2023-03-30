@@ -36,21 +36,5 @@ const getPokemon = async () => {
 export default async function Home() {
   const data = await getPokemon();
 
-  return (
-    <section className="body-font">
-      <div className="container mx-auto grid grid-cols-3 gap-2">
-        {data &&
-          data.results.map((pokemon) => (
-            <Suspense key={pokemon.name} fallback={<PokemonLoader />}>
-              {/* @ts-expect-error Server Component */}
-              <PokemonCard
-                key={pokemon.name}
-                name={pokemon.name}
-                url={pokemon.url}
-              />
-            </Suspense>
-          ))}
-      </div>
-    </section>
-  );
+  return <section className="body-font">This is the Root page</section>;
 }
