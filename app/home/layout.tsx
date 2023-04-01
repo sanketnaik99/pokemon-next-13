@@ -8,7 +8,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
 
   return (
-    <div className="relative border-2 rounded-md border-red-300">
+    <div className="relative border-2 rounded-md border-red-300 pt-8 md:pt-4">
       <h4 className="text-sm absolute font-bold text-center text-white bg-red-300 p-2 rounded-sm top-0 right-0">
         Home Page Layout
       </h4>
