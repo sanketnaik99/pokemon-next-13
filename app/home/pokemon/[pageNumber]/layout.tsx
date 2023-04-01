@@ -22,7 +22,7 @@ const layout = ({
           <li>
             <Link
               href={`/home/pokemon/${
-                params.pageNumber - 1 > 0 ? params.pageNumber - 1 : 1
+                params.pageNumber - 1 > 0 ? Number(params.pageNumber) - 1 : 1
               }`}
             >
               <button className="flex items-center justify-center w-10 h-10 text-indigo-600 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100">
@@ -79,7 +79,7 @@ const layout = ({
             </Link>
           </li>
           <li>
-            <Link href={`/home/pokemon/${params.pageNumber + 1}`}>
+            <Link href={`/home/pokemon/${Number(params.pageNumber) + 1}`}>
               <button className="flex items-center justify-center w-10 h-10 text-indigo-600 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-indigo-100">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                   <path
