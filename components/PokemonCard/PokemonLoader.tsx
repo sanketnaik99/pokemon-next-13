@@ -6,7 +6,9 @@ const PokemonLoader = () => {
       <div className="flex justify-center">
         <div className="w-16 h-16 rounded-full bg-gray-300 animate-pulse"></div>
       </div>
-      <div className="flex justify-center w-24 h-4 bg-gray-300 mt-4"></div>
+      <div className="flex justify-center ">
+        <div className="w-32 h-4 bg-gray-300 mt-4"></div>
+      </div>
     </div>
   );
 };
