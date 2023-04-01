@@ -13,13 +13,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-col text-center w-full mb-20">
+        <div className="container px-5 py-10 mx-auto">
+          <div className="flex flex-col text-center w-full mb-10">
             <h2 className="text-blue-500 tracking-widest font-black text-4xl mb-1">
               RSC Pokemon
             </h2>
             <h1 className="text-md font-medium title-font text-gray-900">
-              A Next13 app that uses the Pokemon API
+              A Next13 app that uses React Server Components, TailwindCSS, and
+              the PokemonAPI
             </h1>
           </div>
         </div>

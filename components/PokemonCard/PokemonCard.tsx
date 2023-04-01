@@ -1,4 +1,4 @@
-import { revalidate } from "@/app/page";
+import { revalidate } from "@/app/home/pokemon/[pageNumber]/page";
 import { Pokemon } from "@/types/pokemon";
 import Image from "next/image";
 import React from "react";
@@ -23,7 +23,7 @@ const PokemonCard = async ({ name, url }: Props) => {
   const pokemonData = await getPokemonData(url);
 
   return (
-    <div className="p-8 bg-gray-100">
+    <div className="p-8 bg-gray-100 hover:bg-gray-200 cursor-pointer rounded-lg">
       <div className="flex justify-center">
         {pokemonData.sprites.front_default ? (
           <Image
