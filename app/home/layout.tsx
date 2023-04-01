@@ -29,7 +29,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           <button
             className={[
               "py-4 px-6 block hover:text-blue-500 focus:outline-none border-b-2 font-medium",
-              pathname.includes("/home/pokemon/1")
+              pathname.includes("/home/pokemon/")
                 ? "text-blue-500 border-blue-500"
                 : "text-gray-500",
             ].join(" ")}
